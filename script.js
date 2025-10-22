@@ -9,6 +9,7 @@ async function startWebcam() {
                 facingMode: useFrontCamera ? 'user' : 'environment'
             }
         };
+
         stream = await navigator.mediaDevices.getUserMedia(constraints);
         video.srcObject = stream;
         camOn = true;
@@ -44,16 +45,6 @@ function stopWebcam() {
         document.exitFullscreen();
     }
 }
-
-function handleOrientation() {
-    if (window.innerHeight > window.innerWidth) {
-        video.style.transform = useFrontCamera ? "rotate(90deg) scaleX(-1)" : "rotate(90deg) scaleX(1)";
-    } else {
-        video.style.transform = useFrontCamera ? "scaleX(-1)" : "scaleX(1)";
-    }
-}
-window.addEventListener('load', handleOrientation);
-window.addEventListener('resize', handleOrientation);
 
 const video = document.getElementById('webcam');
 const toggleCamBtn = document.getElementById('toggleCam');
