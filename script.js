@@ -14,12 +14,21 @@ async function startWebcam() {
         camOn = true;
         toggleCamBtn.textContent = '🙈';
 
+        updateMirror();
         await document.documentElement.requestFullscreen().catch(() => {
             console.warn("Không thể chuyển sang chế độ toàn màn hình.");
         });
 
     } catch (err) {
         console.error("Không thể truy cập camera: ", err.message);
+    }
+}
+
+function updateMirror() {
+    if (useFrontCamera) {
+        video.style.transform = 'scaleX(-1)';
+    } else {
+        video.style.transform = 'scaleX(1)';
     }
 }
 
@@ -35,6 +44,16 @@ function stopWebcam() {
         document.exitFullscreen();
     }
 }
+
+function handleOrientation() {
+    if (window.innerHeight > window.innerWidth) {
+        video.style.transform = useFrontCamera ? "rotate(90deg) scaleX(-1)" : "rotate(90deg) scaleX(1)";
+    } else {
+        video.style.transform = useFrontCamera ? "scaleX(-1)" : "scaleX(1)";
+    }
+}
+window.addEventListener('load', handleOrientation);
+window.addEventListener('resize', handleOrientation);
 
 const video = document.getElementById('webcam');
 const toggleCamBtn = document.getElementById('toggleCam');

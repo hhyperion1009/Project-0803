@@ -40,3 +40,10 @@ html, body {
     font-size: 18px;
     cursor: pointer;
 }
+
+@media (orientation: portrait) {
+    #webcam {
+        transform: rotate(90deg) scaleX(-1);
+        transform-origin: center center;
+    }
+}
